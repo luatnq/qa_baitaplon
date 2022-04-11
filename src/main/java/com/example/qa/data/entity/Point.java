@@ -21,6 +21,4 @@ public class Point implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "factor")
-    private int factor;
 }
