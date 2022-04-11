@@ -19,7 +19,7 @@ public class TranscriptItem extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "transcript_id", referencedColumnName = "id")
-    private Transcript transcript;
+    private TranscriptLine transcriptLine;
 
     @ManyToOne
     @JoinColumn(name = "subject_point_id", referencedColumnName = "id")

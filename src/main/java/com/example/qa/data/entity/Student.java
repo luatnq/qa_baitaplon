@@ -33,13 +33,13 @@ public class Student implements Serializable {
     @JoinTable(name = "student_transcript",
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "transcript_id", referencedColumnName = "id"))
-    private Set<Transcript> transcript;
+    private Set<TranscriptLine> transcriptLine;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "student_transcript_his",
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "transcript_his_id", referencedColumnName = "id"))
-    private Set<TranscriptHis> transcriptHis;
+    private Set<TranscriptLineHis> transcriptLineHis;
 
 
 }

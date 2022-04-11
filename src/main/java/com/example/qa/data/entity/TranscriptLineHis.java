@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TranscriptHis extends BaseEntity{
+public class TranscriptLineHis extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -22,7 +22,7 @@ public class TranscriptHis extends BaseEntity{
     private Subject subject;
 
     @OneToOne
-    private Transcript transcript;
+    private TranscriptLine transcriptLine;
 
     @Column(name = "action")
     private String action;
