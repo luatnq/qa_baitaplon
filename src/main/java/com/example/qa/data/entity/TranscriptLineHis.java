@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 
 @Entity
@@ -17,9 +18,12 @@ public class TranscriptLineHis extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Column(name = "status")
+    private boolean status;
+
     @ManyToOne
-    @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    private Subject subject;
+    @JoinColumn(name = "study_class_id", referencedColumnName = "id")
+    private StudyClass studyClass;
 
     @OneToOne
     private TranscriptLine transcriptLine;
@@ -30,4 +34,13 @@ public class TranscriptLineHis extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public TranscriptLineHis(TranscriptLine transcriptLine, User user, String action){
+        this.action = action;
+        this.status = transcriptLine.isStatus();
+        this.studyClass = transcriptLine.getStudyClass();
+        this.user = user;
+        this.transcriptLine = transcriptLine;
+        super.setLastUpdatedDate(Instant.now());
+    }
 }

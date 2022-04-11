@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "transcript_item_hís")
+@Table(name = "transcript_item_his")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
