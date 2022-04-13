@@ -29,11 +29,11 @@ public class Student implements Serializable {
     @Column(name = "dob")
     private Date dob;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "student_transcript",
-            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "transcript_id", referencedColumnName = "id"))
-    private Set<TranscriptLine> transcriptLine;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "student_transcript",
+//            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "transcript_id", referencedColumnName = "id"))
+//    private Set<TranscriptLine> transcriptLine;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "student_transcript_his",
