@@ -25,4 +25,8 @@ public class TranscriptLine extends BaseEntity{
     @JoinColumn(name = "study_class_id", referencedColumnName = "id")
     private StudyClass studyClass;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+
 }
