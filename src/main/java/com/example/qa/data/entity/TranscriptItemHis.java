@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 
 @Entity
@@ -28,4 +29,11 @@ public class TranscriptItemHis extends BaseEntity{
 
     @Column(name = "point")
     private float point;
+
+    public TranscriptItemHis(TranscriptItem transcriptItem, TranscriptLineHis transcriptLineHis){
+        this.subjectPoint = transcriptItem.getSubjectPoint();
+        this.point = transcriptItem.getPoint();
+        this.transcriptLineHis =  transcriptLineHis;
+        super.setLastUpdatedDate(Instant.now());
+    }
 }

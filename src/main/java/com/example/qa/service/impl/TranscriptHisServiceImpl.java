@@ -1,12 +1,16 @@
 package com.example.qa.service.impl;
 
-import com.example.qa.data.entity.TranscriptLine;
-import com.example.qa.data.entity.TranscriptLineHis;
+import com.example.qa.data.entity.*;
 import com.example.qa.repository.TranscriptHisRepository;
 import com.example.qa.repository.TranscriptItemHisRepository;
+import com.example.qa.repository.UserRepository;
 import com.example.qa.service.TranscriptHisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -14,8 +18,20 @@ import org.springframework.stereotype.Service;
 public class TranscriptHisServiceImpl implements TranscriptHisService {
     private final TranscriptHisRepository transcriptHisRepository;
     private final TranscriptItemHisRepository transcriptItemHisRepository;
+    private final UserRepository userRepository;
 
-    public void createTranscriptHis(TranscriptLine transcriptLine){
-        TranscriptLineHis transcriptLineHis = new TranscriptLineHis();
+    private final String UPDATE_ACTION = "update";
+    private final String CREATE_ACTION = "create";
+
+    @Transactional
+    public void createTranscriptHis(TranscriptLine transcriptLine, String username, List<TranscriptItem> transcriptItems) {
+        User user = userRepository.findByUsername(username);
+        TranscriptLineHis transcriptLineHis = new TranscriptLineHis(transcriptLine, user, CREATE_ACTION);
+
+        List<TranscriptItemHis> transcriptItemHis = new ArrayList<>();
+        for (TranscriptItem item : transcriptItems) {
+            transcriptItemHis.add(new TranscriptItemHis(item, transcriptLineHis));
+        }
+
     }
 }
