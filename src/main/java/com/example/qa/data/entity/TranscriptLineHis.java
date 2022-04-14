@@ -35,6 +35,10 @@ public class TranscriptLineHis extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+
     public TranscriptLineHis(TranscriptLine transcriptLine, User user, String action){
         this.action = action;
         this.status = transcriptLine.isStatus();
