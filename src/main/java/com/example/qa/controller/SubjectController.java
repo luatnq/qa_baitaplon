@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/subject")
+@RequestMapping("api/v1/subjects")
 public class SubjectController {
 
     private final SubjectService subjectService;
