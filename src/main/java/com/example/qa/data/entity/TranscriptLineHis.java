@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 
 @Entity
@@ -45,6 +47,7 @@ public class TranscriptLineHis extends BaseEntity{
         this.studyClass = transcriptLine.getStudyClass();
         this.user = user;
         this.transcriptLine = transcriptLine;
-        super.setLastUpdatedDate(Instant.now());
+        ZoneId asiaVietnamese = ZoneId.of("Asia/Vietnamese");
+        super.setLastUpdatedDate(ZonedDateTime.ofInstant(Instant.now(), asiaVietnamese).toInstant());
     }
 }
