@@ -1,6 +1,7 @@
 package com.example.qa.service;
 
-import com.example.qa.data.entity.TranscriptLine;
+import com.example.qa.dto.StudyClassDTO;
+import com.example.qa.dto.SubjectPointDTO;
 import com.example.qa.dto.TranscriptLineDTO;
 
 import java.util.List;

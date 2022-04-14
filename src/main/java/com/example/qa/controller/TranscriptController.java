@@ -21,6 +21,8 @@ public class TranscriptController {
         this.transcriptLineService = transcriptLineService;
     }
 
+
+
     @GetMapping("/{study_class_id}")
     public ResponseEntity<List<TranscriptLineDTO>> getTranscript(@PathVariable("study_class_id") int studyClassId) {
         return new ResponseEntity<>(transcriptLineService.getTranscript(studyClassId), HttpStatus.OK);
