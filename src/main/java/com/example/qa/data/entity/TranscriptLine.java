@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "transcripts")
@@ -28,5 +29,9 @@ public class TranscriptLine extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
+
+    @OneToMany(mappedBy = "transcriptLine")
+    private List<TranscriptItem> transcriptItems;
+
 
 }

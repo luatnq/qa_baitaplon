@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,4 +24,7 @@ public class Subject {
 
     @Column(name = "subject_code")
     private String subjectCode;
+
+    @OneToMany(mappedBy = "subject")
+    private List<SubjectPoint> subjectPoints;
 }
