@@ -24,4 +24,12 @@ public class StudyClass implements Serializable {
 
     @Column(name = "class_room")
     private String classRoom;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_semester_id", referencedColumnName = "id")
+    private SubjectSemester subjectSemester;
+
+//    @ManyToOne
+//    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+//    private Teacher teacher;
 }

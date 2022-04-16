@@ -1,14 +1,12 @@
 package com.example.qa.controller;
 
 import com.example.qa.dto.StudyClassDTO;
+import com.example.qa.dto.SubjectDTO;
 import com.example.qa.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +22,14 @@ public class SubjectController {
     }
 
     @GetMapping("/{subject_id}")
-    public ResponseEntity<List<StudyClassDTO>> getStudyClassBySubject(@PathVariable("subject_id") int id) {
-        return new ResponseEntity<>(subjectService.getStudyClassBySubject(id), HttpStatus.OK);
+    public ResponseEntity<List<StudyClassDTO>> getStudyClassBySubject(@PathVariable("subject_id") int subjectId,
+                                                                      @RequestParam("semester_id") int semesterId) {
+        return new ResponseEntity<>(subjectService.getStudyClassBySubject(subjectId, semesterId), HttpStatus.OK);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<SubjectDTO>> getSubjectsByTeacher(@RequestParam(name = "username") String username){
+        return new ResponseEntity<>(subjectService.getSubjects(username), HttpStatus.OK);
     }
 }
