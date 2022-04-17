@@ -6,18 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyClassDTO {
+public class SemesterDTO {
 
     @JsonProperty("id")
     private int id;
 
-    @JsonProperty("class_name")
-    private String className;
+    @JsonProperty("from_year")
+    private int fromYear;
 
-    @JsonProperty("subject_semester")
-    private SubjectSemesterDTO subjectSemester;
+    @JsonProperty("to_year")
+    private int toYear;
+
+    @JsonProperty("semester_num")
+    private int semesterNum;
 }
