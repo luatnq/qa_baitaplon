@@ -26,30 +26,11 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
     private final StudyClassRepository studyClassRepository;
-
     private final SubjectSemesterRepository subjectSemesterRepository;
-
-//    @Autowired
-//    public SubjectServiceImpl(MappingHelper mappingHelper, SubjectRepository subjectRepository) {
-//        this.mappingHelper = mappingHelper;
-//        this.subjectRepository = subjectRepository;
-//    }
 
     @Override
     public List<StudyClassDTO> getStudyClassBySubject(int subjectId, int semesterId) {
-//        Subject subject = subjectRepository.findById(subjectId).orElse(null);
-//        if (subject == null) return null;
-//        if (subject.getSubjectPoints().isEmpty()){
-//            return new ArrayList<>();
-//        }
-//        List<TranscriptItem> transcriptItems = subject.getSubjectPoints().get(0).getTranscriptItems();
-//        List<StudyClass> studyClasses = transcriptItems.stream()
-//                .map(item -> {
-//                    return item.getTranscriptLine().getStudyClass();
-//                })
-//                .collect(Collectors.toList());
         SubjectSemester subjectSemester = subjectSemesterRepository.getSubjectSemesterBySemesterIdAndSubjectId(semesterId, subjectId);
-
         return mappingHelper.mapList(studyClassRepository.getStudyClassBySubjectSemester(subjectSemester), StudyClassDTO.class);
     }
 

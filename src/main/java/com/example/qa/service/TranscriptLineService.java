@@ -3,12 +3,15 @@ package com.example.qa.service;
 import com.example.qa.dto.StudyClassDTO;
 import com.example.qa.dto.SubjectPointDTO;
 import com.example.qa.dto.TranscriptLineDTO;
+import com.example.qa.dto.TranscriptOverview;
 
 import java.util.List;
 
 public interface TranscriptLineService {
 
-    List<TranscriptLineDTO> getTranscript(int studyClassId);
+    TranscriptOverview getTranscript(int studyClassId, int subjectId);
+
+    List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines);
 
 //    List<TranscriptLine> insertPoint(int studyClassId, List<TranscriptLine> transcriptLines);
 

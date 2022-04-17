@@ -46,6 +46,7 @@ public class TranscriptLineHis extends BaseEntity{
         this.status = transcriptLine.isStatus();
         this.studyClass = transcriptLine.getStudyClass();
         this.user = user;
+        this.student = transcriptLine.getStudent();
         this.transcriptLine = transcriptLine;
         ZoneId asiaVietnamese = ZoneId.of("Asia/Vietnamese");
         super.setLastUpdatedDate(ZonedDateTime.ofInstant(Instant.now(), asiaVietnamese).toInstant());
