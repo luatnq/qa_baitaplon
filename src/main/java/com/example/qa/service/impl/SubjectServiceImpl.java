@@ -3,11 +3,10 @@ package com.example.qa.service.impl;
 import com.example.qa.converter.MappingHelper;
 import com.example.qa.data.entity.*;
 import com.example.qa.dto.StudyClassDTO;
+import com.example.qa.dto.StudyClassOverview;
 import com.example.qa.dto.SubjectDTO;
-import com.example.qa.repository.StudyClassRepository;
-import com.example.qa.repository.SubjectRepository;
-import com.example.qa.repository.SubjectSemesterRepository;
-import com.example.qa.repository.UserRepository;
+import com.example.qa.dto.SubjectPointDTO;
+import com.example.qa.repository.*;
 import com.example.qa.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ public class SubjectServiceImpl implements SubjectService {
     private final UserRepository userRepository;
     private final StudyClassRepository studyClassRepository;
     private final SubjectSemesterRepository subjectSemesterRepository;
+    private final SubjectPointRepository subjectPointRepository;
 
     @Override
     public List<StudyClassDTO> getStudyClassBySubject(int subjectId, int semesterId) {
@@ -39,5 +39,14 @@ public class SubjectServiceImpl implements SubjectService {
         Teacher teacher = userRepository.findByUsername(username);
         if (Objects.isNull(teacher) || teacher.getSubjects().isEmpty()) return new ArrayList<>();
         return  mappingHelper.mapList(new ArrayList<>(teacher.getSubjects()), SubjectDTO.class);
+    }
+
+
+    public StudyClassOverview getStudyClassInformation(int subjectId, int studyClassId){
+        List<SubjectPointDTO> subjectPointDTOs = mappingHelper.mapList(subjectPointRepository.getSubjectPoint(subjectId), SubjectPointDTO.class);
+
+        StudyClassDTO studyClassDTO = mappingHelper.map(studyClassRepository.getById(studyClassId), StudyClassDTO.class);
+
+        return new StudyClassOverview(studyClassDTO, subjectPointDTOs);
     }
 }

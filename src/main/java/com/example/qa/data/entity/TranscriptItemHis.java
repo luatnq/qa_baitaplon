@@ -1,13 +1,11 @@
 package com.example.qa.data.entity;
 
+import com.example.qa.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 
 @Entity
@@ -36,7 +34,6 @@ public class TranscriptItemHis extends BaseEntity{
         this.subjectPoint = transcriptItem.getSubjectPoint();
         this.point = transcriptItem.getPoint();
         this.transcriptLineHis =  transcriptLineHis;
-        ZoneId asiaVietnamese = ZoneId.of("Asia/Vietnamese");
-        super.setLastUpdatedDate(ZonedDateTime.ofInstant(Instant.now(), asiaVietnamese).toInstant());
+        super.setLastUpdatedDate(DateUtils.now());
     }
 }

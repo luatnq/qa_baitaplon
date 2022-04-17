@@ -1,5 +1,6 @@
 package com.example.qa.data.entity;
 
+import com.example.qa.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,7 +49,6 @@ public class TranscriptLineHis extends BaseEntity{
         this.user = user;
         this.student = transcriptLine.getStudent();
         this.transcriptLine = transcriptLine;
-        ZoneId asiaVietnamese = ZoneId.of("Asia/Vietnamese");
-        super.setLastUpdatedDate(ZonedDateTime.ofInstant(Instant.now(), asiaVietnamese).toInstant());
+        super.setLastUpdatedDate(DateUtils.now());
     }
 }

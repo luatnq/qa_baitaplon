@@ -25,13 +25,13 @@ public class TranscriptHisServiceImpl implements TranscriptHisService {
     private final String DELETE_ACTION = "delete";
 
     @Transactional
-    public void createTranscriptHis(TranscriptLine transcriptLine, String username, List<TranscriptItem> transcriptItems, String action) {
+    public void createTranscriptHis(TranscriptLine transcriptLine, String username, String action) {
         User user = userRepository.findByUsername(username);
         TranscriptLineHis transcriptLineHis = new TranscriptLineHis(transcriptLine, user,
                 action.equals(CREATE_ACTION) ? CREATE_ACTION : action.equals(UPDATE_ACTION) ? UPDATE_ACTION : DELETE_ACTION);
 
         List<TranscriptItemHis> transcriptItemHis = new ArrayList<>();
-        for (TranscriptItem item : transcriptItems) {
+        for (TranscriptItem item : transcriptLine.getTranscriptItems()) {
             transcriptItemHis.add(new TranscriptItemHis(item, transcriptLineHis));
         }
 

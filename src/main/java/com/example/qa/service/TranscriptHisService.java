@@ -6,5 +6,5 @@ import com.example.qa.data.entity.TranscriptLine;
 import java.util.List;
 
 public interface TranscriptHisService {
-    void createTranscriptHis(TranscriptLine transcriptLine, String username, List<TranscriptItem> transcriptItems, String action);
+    void createTranscriptHis(TranscriptLine transcriptLine, String username, String action);
 }

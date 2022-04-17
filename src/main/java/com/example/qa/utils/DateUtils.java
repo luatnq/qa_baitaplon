@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 
 public class DateUtils {
     public static Instant now(){
-        ZoneId asiaVietnamese = ZoneId.of("Asia/Vietnamese");
+        ZoneId asiaVietnamese = ZoneId.of("Asia/Ho_Chi_Minh");
         return ZonedDateTime.ofInstant(Instant.now(), asiaVietnamese).toInstant();
     }
 }

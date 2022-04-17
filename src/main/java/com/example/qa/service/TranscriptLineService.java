@@ -11,7 +11,7 @@ public interface TranscriptLineService {
 
     TranscriptOverview getTranscript(int studyClassId, int subjectId);
 
-    List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines);
+    List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines, String username);
 
 //    List<TranscriptLine> insertPoint(int studyClassId, List<TranscriptLine> transcriptLines);
 

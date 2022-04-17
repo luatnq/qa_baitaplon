@@ -30,7 +30,8 @@ public class TranscriptController {
     }
 
     @PutMapping
-    public ResponseEntity<List<TranscriptLineDTO>> updatePoint(@RequestBody List<TranscriptLineDTO> transcriptLines) {
-        return new ResponseEntity<>(transcriptLineService.updatePoint(1, transcriptLines), HttpStatus.OK);
+    public ResponseEntity<List<TranscriptLineDTO>> updatePoint(@RequestBody List<TranscriptLineDTO> transcriptLines,
+                                                               @RequestHeader(name = "X-username") String username) {
+        return new ResponseEntity<>(transcriptLineService.updatePoint(1, transcriptLines, username), HttpStatus.OK);
     }
 }
