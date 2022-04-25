@@ -1,8 +1,10 @@
 package com.example.qa.controller;
 
 import com.example.qa.data.entity.TranscriptLine;
+import com.example.qa.dto.LogDTO;
 import com.example.qa.dto.TranscriptLineDTO;
 import com.example.qa.dto.TranscriptOverview;
+import com.example.qa.service.TranscriptHisService;
 import com.example.qa.service.TranscriptLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,19 @@ public class TranscriptController {
 
     private final TranscriptLineService transcriptLineService;
 
+    private final TranscriptHisService transcriptHisService;
+
     @Autowired
-    public TranscriptController(TranscriptLineService transcriptLineService) {
+    public TranscriptController(TranscriptLineService transcriptLineService,
+                                TranscriptHisService transcriptHisService) {
         this.transcriptLineService = transcriptLineService;
+        this.transcriptHisService = transcriptHisService;
     }
 
+    @GetMapping("/log_histories")
+    public ResponseEntity<List<LogDTO>> getLogHistories(){
+        return ResponseEntity.ok(transcriptHisService.getTranscriptLineHis());
+    }
 
     @GetMapping
     public ResponseEntity<TranscriptOverview> getTranscript(@RequestParam(name = "study_class_id") int studyClassId,

@@ -15,6 +15,20 @@ public class TranscriptOverview {
     @JsonProperty("transcript_lines")
     private List<TranscriptLineDTO> transcriptLineDTOs;
 
-   @JsonProperty("subject_points")
+    @JsonProperty("subject_points")
     private List<SubjectPointDTO> subjectPointDTOs;
+
+    @JsonProperty("statistic_student_pass")
+    private int statisticStudentPass;
+
+    @JsonProperty("statistic_student_fail")
+    private int statisticStudentFail;
+
+    @JsonProperty("statistic_student_eligible")
+    private int statisticStudentEligible;
+
+    @JsonProperty("statistic_student_non_eligible")
+    private int statisticStudentNonEligible;
+
+
 }

@@ -19,5 +19,5 @@ public class TranscriptItemDTO {
     private SubjectPointDTO subjectPoint;
 
     @JsonProperty("point")
-    private float point;
+    private Float point;
 }

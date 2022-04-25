@@ -28,7 +28,7 @@ public class TranscriptItemHis extends BaseEntity{
     private SubjectPoint subjectPoint;
 
     @Column(name = "point")
-    private float point;
+    private Float point;
 
     public TranscriptItemHis(TranscriptItem transcriptItem, TranscriptLineHis transcriptLineHis){
         this.subjectPoint = transcriptItem.getSubjectPoint();

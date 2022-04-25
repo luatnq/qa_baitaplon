@@ -26,5 +26,5 @@ public class TranscriptItem extends BaseEntity{
     private SubjectPoint subjectPoint;
 
     @Column(name = "point")
-    private float point;
+    private Float point;
 }

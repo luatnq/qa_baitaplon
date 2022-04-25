@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class TranscriptLineHis extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "status")
@@ -42,13 +42,18 @@ public class TranscriptLineHis extends BaseEntity{
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
-    public TranscriptLineHis(TranscriptLine transcriptLine, User user, String action){
+    @ManyToOne
+    @JoinColumn(name = "log_id", referencedColumnName = "id")
+    private LogHistory logHistory;
+
+    public TranscriptLineHis(TranscriptLine transcriptLine, User user, String action, LogHistory logHistory){
         this.action = action;
         this.status = transcriptLine.isStatus();
         this.studyClass = transcriptLine.getStudyClass();
         this.user = user;
         this.student = transcriptLine.getStudent();
         this.transcriptLine = transcriptLine;
+        this.logHistory = logHistory;
         super.setLastUpdatedDate(DateUtils.now());
     }
 }
