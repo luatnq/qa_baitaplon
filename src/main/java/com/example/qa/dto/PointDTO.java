@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class PointDTO {
 
     @JsonProperty("id")
-    private int id;
+    private Integer id;
 
     @JsonProperty("name")
     private String name;

@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,19 +32,29 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
     private final String UPDATE_ACTION = "update";
     private final String CREATE_ACTION = "create";
     private final String DELETE_ACTION = "delete";
+    private final String POINT_FINAL_DESCRIPTION = "final";
 
     @Override
     public TranscriptOverview getTranscript(int studyClassId, int subjectId) {
-        List<TranscriptLineDTO> transcriptLineDTOs = mappingHelper.mapList(
-                transcriptLineRepository.findByStudyClassId(studyClassId), TranscriptLineDTO.class);
-        List<Integer> transcriptLineIds = transcriptLineRepository.getIdsByStudyClassId(studyClassId);
 
-        int countStudentFailFinalPoint = this.statisticFailFinalPoint(transcriptLineIds);
+        List<TranscriptLine> transcriptLines = transcriptLineRepository.findByStudyClassId(studyClassId);
+        List<TranscriptLineDTO> transcriptLineDTOs = mappingHelper.mapList(transcriptLines, TranscriptLineDTO.class);
+        this.sortTranscriptItems(transcriptLineDTOs);
+
+        List<Integer> transcriptLineIds = transcriptLineRepository.getIdsByStudyClassId(studyClassId);
+        List<SubjectPoint> subjectPoints = subjectPointRepository.getSubjectPoint(subjectId);
+        List<SubjectPointDTO> subjectPointDTOs = mappingHelper.mapList(subjectPoints, SubjectPointDTO.class);
+        this.handlePointFinal(transcriptLineDTOs, subjectPointDTOs);
+
+        List<Integer> lineIdsPreStatistic = this.getTranLineIdPass(transcriptLineDTOs);
+        int countStudentFailFinalPointPre = transcriptLineIds.size() - lineIdsPreStatistic.size();
+        int countStudentFailFinalPoint = this.statisticFailFinalPoint(lineIdsPreStatistic);
         int countStudentNonEligible = this.statisticStudentNonEligible(transcriptLineIds, transcriptLineDTOs);
 
-        List<SubjectPointDTO> subjectPointDTOs = mappingHelper.mapList(subjectPointRepository.getSubjectPoint(subjectId), SubjectPointDTO.class);
+
         return new TranscriptOverview(handleOutputTranscriptLine(transcriptLineDTOs), subjectPointDTOs,
-                transcriptLineDTOs.size() - countStudentFailFinalPoint, countStudentFailFinalPoint,
+                transcriptLineDTOs.size() - countStudentFailFinalPoint - countStudentFailFinalPointPre,
+                countStudentFailFinalPoint + countStudentFailFinalPointPre,
                 transcriptLineDTOs.size() - countStudentNonEligible, countStudentNonEligible);
     }
 
@@ -79,6 +87,9 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         for (TranscriptLineDTO transcriptLineDTO : transcriptLineDTOS) {
             transcriptLineDTO.setStudyClass(null);
             for (TranscriptItemDTO item : transcriptLineDTO.getTranscriptItems()) {
+                if (Objects.isNull(item.getSubjectPoint())){
+                    continue;
+                }
                 item.getSubjectPoint().setSubject(null);
             }
         }
@@ -108,12 +119,15 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
 
     private int statisticStudentNonEligible(List<Integer> transcriptLineIds, List<TranscriptLineDTO> transcriptLineDTOs) {
         int countStudentFail = 0;
-        for(TranscriptLineDTO lineDTO : transcriptLineDTOs){
+        for (TranscriptLineDTO lineDTO : transcriptLineDTOs) {
             boolean flag = false;
-            for (TranscriptItemDTO itemDTO : lineDTO.getTranscriptItems()){
-                if (checkSubjectPoint(transcriptLineIds, itemDTO.getSubjectPoint().getPoint().getId())){
-                    if(itemDTO.getPoint().compareTo(0F) != 1){
-                        countStudentFail ++;
+            for (TranscriptItemDTO itemDTO : lineDTO.getTranscriptItems()) {
+                if (Objects.isNull(itemDTO.getSubjectPoint())) {
+                    continue;
+                }
+                if (checkSubjectPoint(transcriptLineIds, itemDTO.getSubjectPoint().getPoint().getId())) {
+                    if (itemDTO.getPoint().compareTo(0F) != 1) {
+                        countStudentFail++;
                         break;
                     }
                 }
@@ -122,4 +136,38 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         return countStudentFail;
     }
 
+    private void sortTranscriptItems(List<TranscriptLineDTO> transcriptLineDTOs){
+        for (TranscriptLineDTO lineDTO : transcriptLineDTOs){
+            Collections.sort(lineDTO.getTranscriptItems(), (o1, o2) -> o1.getSubjectPoint().getPoint().getId().compareTo(
+                    o2.getSubjectPoint().getPoint().getId()));
+        }
+    }
+    private void handlePointFinal(List<TranscriptLineDTO> transcriptLineDTOs, List<SubjectPointDTO> subjectPointDTOs) {
+        for (TranscriptLineDTO lineDTO : transcriptLineDTOs) {
+            lineDTO.getTranscriptItems().add(this.calPointFinal(lineDTO, subjectPointDTOs));
+        }
+    }
+
+    private TranscriptItemDTO calPointFinal(TranscriptLineDTO transcriptLine, List<SubjectPointDTO> subjectPoints) {
+        Float pointFinal = 0F;
+        for (SubjectPointDTO subjectPoint : subjectPoints) {
+            TranscriptItem transcriptItem = transcriptItemRepository.getTranscriptItemByTranscriptLine_IdAndSubjectPoint_Id(
+                    transcriptLine.getId(), subjectPoint.getId());
+            if (Objects.nonNull(transcriptItem.getPoint())) {
+                pointFinal += transcriptItem.getPoint() * (subjectPoint.getFactor() / 100F);
+            }
+        }
+        return new TranscriptItemDTO(pointFinal, POINT_FINAL_DESCRIPTION);
+    }
+
+    private List<Integer> getTranLineIdPass(List<TranscriptLineDTO> transcriptLineDTOs) {
+        List<Integer> transcriptLineIds = new ArrayList<>();
+        for (TranscriptLineDTO lineDTO : transcriptLineDTOs) {
+            TranscriptItemDTO itemDTO = lineDTO.getTranscriptItems().get(lineDTO.getTranscriptItems().size() - 1);
+            if (itemDTO.getPoint().compareTo(4F) == 0 || itemDTO.getPoint().compareTo(4F) == 1) {
+                transcriptLineIds.add(lineDTO.getId());
+            }
+        }
+        return transcriptLineIds;
+    }
 }

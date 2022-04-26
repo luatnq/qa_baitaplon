@@ -1,6 +1,8 @@
 package com.example.qa.repository;
 
+import com.example.qa.data.entity.SubjectPoint;
 import com.example.qa.data.entity.TranscriptItem;
+import com.example.qa.data.entity.TranscriptLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +35,6 @@ public interface TranscriptItemRepository extends JpaRepository<TranscriptItem, 
             "and (sp.point.id = :point_id )" +
             "and item.point is null ")
     List<TranscriptItem> getTranscriptItemsByPointId(@Param("line_ids") List<Integer> transcriptLineIds, @Param("point_id") int pointId);
+
+    TranscriptItem getTranscriptItemByTranscriptLine_IdAndSubjectPoint_Id(Integer tranId, Integer subjectPointId);
 }
