@@ -17,11 +17,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody LoginReqDTO loginReq){
-        if (authService.login(loginReq)){
-            return new ResponseEntity<>(HttpEntity.EMPTY, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpEntity.EMPTY, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> login(@RequestBody LoginReqDTO loginReq) {
+
+        return new ResponseEntity<>(authService.login(loginReq), HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,8 @@
 package com.example.qa.service;
 
 import com.example.qa.data.dto.request.LoginReqDTO;
+import com.example.qa.dto.UserDTO;
 
 public interface AuthService {
-    boolean login(LoginReqDTO loginReqDTO);
+    UserDTO login(LoginReqDTO loginReqDTO);
 }

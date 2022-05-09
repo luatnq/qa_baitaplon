@@ -16,4 +16,6 @@ public interface TranscriptLineService {
     BaseResponse approveRequest(String usernameApprove, int id, int status);
 
     BaseResponse checkRequest(int id);
+
+    BaseResponse getRequests();
 }

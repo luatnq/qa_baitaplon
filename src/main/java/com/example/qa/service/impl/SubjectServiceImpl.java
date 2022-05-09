@@ -28,20 +28,32 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectSemesterRepository subjectSemesterRepository;
     private final SubjectPointRepository subjectPointRepository;
 
+    private final TeacherRepository teacherRepository;
+
     @Override
     public List<StudyClassDTO> getStudyClassBySubject(int subjectId, int semesterId) {
         SubjectSemester subjectSemester = subjectSemesterRepository.getSubjectSemesterBySemesterIdAndSubjectId(semesterId, subjectId);
         return mappingHelper.mapList(studyClassRepository.getStudyClassBySubjectSemester(subjectSemester), StudyClassDTO.class);
     }
 
+    /**
+     * #TODO them exception (400-Giao vien chua duoc phan cong mon hoc)
+     * @param username
+     * @return
+     */
     @Override
     public List<SubjectDTO> getSubjects(String username){
-        Teacher teacher = userRepository.findByUsername(username);
+        Teacher teacher = teacherRepository.findByUsername(username);
         if (Objects.isNull(teacher) || teacher.getSubjects().isEmpty()) return new ArrayList<>();
         return  mappingHelper.mapList(new ArrayList<>(teacher.getSubjects()), SubjectDTO.class);
     }
 
-
+    /**
+     * #TODO tuong tu ben tren
+     * @param subjectId
+     * @param studyClassId
+     * @return
+     */
     public StudyClassOverview getStudyClassInformation(int subjectId, int studyClassId){
         List<SubjectPointDTO> subjectPointDTOs = mappingHelper.mapList(subjectPointRepository.getSubjectPoint(subjectId), SubjectPointDTO.class);
 

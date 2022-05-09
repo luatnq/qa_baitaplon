@@ -193,4 +193,12 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         return baseResponse;
 
     }
+
+
+    public BaseResponse getRequests(){
+        Date dateInput = Date.from(DateUtils.now());
+        List<Request> requests = requestRepository.getRequests(dateInput);
+        return new BaseResponse(200, mappingHelper.mapList(requests, RequestDTO.class));
+    }
+
 }

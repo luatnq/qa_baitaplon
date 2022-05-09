@@ -56,7 +56,12 @@ public class TranscriptController {
     }
 
     @GetMapping("/request/{id}")
-    public ResponseEntity<BaseResponse> checkRequest(@PathVariable(name = "id") int id){
+    public ResponseEntity<BaseResponse> checkRequest(@PathVariable(name = "id") int id) {
         return new ResponseEntity<>(transcriptLineService.checkRequest(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/requests")
+    public ResponseEntity<BaseResponse> getChecks(){
+        return new ResponseEntity<>(transcriptLineService.getRequests(), HttpStatus.OK);
     }
 }
