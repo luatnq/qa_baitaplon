@@ -1,10 +1,7 @@
 package com.example.qa.controller;
 
 import com.example.qa.data.entity.TranscriptLine;
-import com.example.qa.dto.LogDTO;
-import com.example.qa.dto.RequestDTO;
-import com.example.qa.dto.TranscriptLineDTO;
-import com.example.qa.dto.TranscriptOverview;
+import com.example.qa.dto.*;
 import com.example.qa.service.TranscriptHisService;
 import com.example.qa.service.TranscriptLineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +46,17 @@ public class TranscriptController {
     @PostMapping("/send-request")
     public ResponseEntity<RequestDTO> sendRequest(@RequestBody RequestDTO requestDTO){
         return new ResponseEntity<>(transcriptLineService.sendRequest(requestDTO), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/request/{id}")
+    public ResponseEntity<BaseResponse> approveRequest(@PathVariable(name = "id") int id,
+                                                       @RequestParam(name = "username_approve") String usernameApprove,
+                                                       @RequestParam(name = "status") int status){
+        return new ResponseEntity<>(transcriptLineService.approveRequest(usernameApprove, id, status), HttpStatus.OK);
+    }
+
+    @GetMapping("/request/{id}")
+    public ResponseEntity<BaseResponse> checkRequest(@PathVariable(name = "id") int id){
+        return new ResponseEntity<>(transcriptLineService.checkRequest(id), HttpStatus.OK);
     }
 }

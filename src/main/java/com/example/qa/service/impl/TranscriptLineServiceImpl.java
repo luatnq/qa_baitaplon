@@ -183,4 +183,14 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
 
         return new BaseResponse();
     }
+
+    public BaseResponse checkRequest(int id){
+        Request request = requestRepository.getById(id);
+
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(mappingHelper.map(request, RequestDTO.class));
+
+        return baseResponse;
+
+    }
 }

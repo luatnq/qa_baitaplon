@@ -14,4 +14,6 @@ public interface TranscriptLineService {
     RequestDTO sendRequest(RequestDTO requestDTO);
 
     BaseResponse approveRequest(String usernameApprove, int id, int status);
+
+    BaseResponse checkRequest(int id);
 }

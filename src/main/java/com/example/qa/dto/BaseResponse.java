@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 public class BaseResponse {
     private int status;
 
-    private Class<?> data;
+    private String message;
+
+    private Object data;
 }
