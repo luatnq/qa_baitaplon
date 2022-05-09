@@ -3,6 +3,7 @@ package com.example.qa.service.impl;
 import com.example.qa.converter.MappingHelper;
 import com.example.qa.data.entity.*;
 import com.example.qa.dto.*;
+import com.example.qa.exception.BadRequestAlertException;
 import com.example.qa.repository.*;
 import com.example.qa.service.TranscriptHisService;
 import com.example.qa.service.TranscriptLineService;
@@ -184,9 +185,17 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         return new BaseResponse();
     }
 
+    /**
+     * #TODO thay message tra ra
+     * @param id
+     * @return
+     */
     public BaseResponse checkRequest(int id){
         Request request = requestRepository.getById(id);
-
+        Date dateInput = Date.from(DateUtils.now());
+        if (request.getExpireDate().compareTo(dateInput) == -1){
+            throw new BadRequestAlertException();
+        }
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(mappingHelper.map(request, RequestDTO.class));
 

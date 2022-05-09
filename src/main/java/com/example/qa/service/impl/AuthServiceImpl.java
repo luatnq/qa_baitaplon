@@ -44,14 +44,4 @@ public class AuthServiceImpl implements AuthService {
         throw new UnauthorizedException();
     }
 
-//    private String checkRole(User user) {
-//        if (user.) {
-//            return roleTeacher;
-//        }
-//        Staff staff = staffRepository.getById(user.getId());
-//        if (Objects.nonNull(staff)) {
-//            return roleStaff;
-//        }
-//        throw new UnauthorizedException();
-//    }
 }
