@@ -3,6 +3,7 @@ package com.example.qa.service.impl;
 
 import com.example.qa.data.dto.request.LoginReqDTO;
 import com.example.qa.data.entity.User;
+import com.example.qa.exception.common.LoginFailedException;
 import com.example.qa.repository.UserRepository;
 import com.example.qa.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,6 @@ public class AuthServiceImpl implements AuthService {
         if (Objects.nonNull(user) && passwordEncoder.matches(loginReqDTO.getPassword(), user.getPassword())) {
             return true;
         }
-        return false;
+        throw new LoginFailedException(401, "Login failed");
     }
 }
