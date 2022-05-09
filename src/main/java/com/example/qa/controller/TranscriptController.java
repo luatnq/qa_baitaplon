@@ -2,6 +2,7 @@ package com.example.qa.controller;
 
 import com.example.qa.data.entity.TranscriptLine;
 import com.example.qa.dto.LogDTO;
+import com.example.qa.dto.RequestDTO;
 import com.example.qa.dto.TranscriptLineDTO;
 import com.example.qa.dto.TranscriptOverview;
 import com.example.qa.service.TranscriptHisService;
@@ -43,5 +44,10 @@ public class TranscriptController {
     public ResponseEntity<List<TranscriptLineDTO>> updatePoint(@RequestBody List<TranscriptLineDTO> transcriptLines,
                                                                @RequestHeader(name = "X-username") String username) {
         return new ResponseEntity<>(transcriptLineService.updatePoint(1, transcriptLines, username), HttpStatus.OK);
+    }
+
+    @PostMapping("/send-request")
+    public ResponseEntity<RequestDTO> sendRequest(@RequestBody RequestDTO requestDTO){
+        return new ResponseEntity<>(transcriptLineService.sendRequest(requestDTO), HttpStatus.CREATED);
     }
 }

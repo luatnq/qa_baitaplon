@@ -1,9 +1,6 @@
 package com.example.qa.service;
 
-import com.example.qa.dto.StudyClassDTO;
-import com.example.qa.dto.SubjectPointDTO;
-import com.example.qa.dto.TranscriptLineDTO;
-import com.example.qa.dto.TranscriptOverview;
+import com.example.qa.dto.*;
 
 import java.util.List;
 
@@ -13,6 +10,8 @@ public interface TranscriptLineService {
 
     List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines, String username);
 
-//    List<TranscriptLine> insertPoint(int studyClassId, List<TranscriptLine> transcriptLines);
+    //    List<TranscriptLine> insertPoint(int studyClassId, List<TranscriptLine> transcriptLines);
+    RequestDTO sendRequest(RequestDTO requestDTO);
 
+    BaseResponse approveRequest(String usernameApprove, int id, int status);
 }
