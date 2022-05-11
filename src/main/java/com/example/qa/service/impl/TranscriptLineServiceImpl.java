@@ -4,6 +4,7 @@ import com.example.qa.converter.MappingHelper;
 import com.example.qa.data.entity.*;
 import com.example.qa.dto.*;
 import com.example.qa.exception.BadRequestAlertException;
+import com.example.qa.exception.ResourceNotFoundException;
 import com.example.qa.repository.*;
 import com.example.qa.service.TranscriptHisService;
 import com.example.qa.service.TranscriptLineService;
@@ -56,7 +57,8 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
     }
 
     @Transactional
-    public List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines, String username) {
+    public List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines,
+                                               String username, int requestId) {
         List<TranscriptLine> transcriptLines = transcriptLineRepository.findByStudyClassId(studyClassId);
         int updateLine = 0;
         User user = userRepository.findByUsername(username);
@@ -67,6 +69,8 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
             transcriptHisService.createTranscriptHis(line, username, UPDATE_ACTION, log);
             updateLine++;
         }
+        Request request = requestRepository.findById(requestId).orElseThrow(() -> new ResourceNotFoundException());
+        request.setStatus(3);
         return mappingHelper.mapList(transcriptLines, TranscriptLineDTO.class);
     }
 
@@ -194,7 +198,7 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         Request request = requestRepository.getById(id);
         Date dateInput = Date.from(DateUtils.now());
         if (request.getExpireDate().compareTo(dateInput) == -1){
-            throw new BadRequestAlertException();
+            return null;
         }
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(mappingHelper.map(request, RequestDTO.class));

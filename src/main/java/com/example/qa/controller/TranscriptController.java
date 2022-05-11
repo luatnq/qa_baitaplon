@@ -39,8 +39,9 @@ public class TranscriptController {
 
     @PutMapping
     public ResponseEntity<List<TranscriptLineDTO>> updatePoint(@RequestBody List<TranscriptLineDTO> transcriptLines,
-                                                               @RequestHeader(name = "X-username") String username) {
-        return new ResponseEntity<>(transcriptLineService.updatePoint(1, transcriptLines, username), HttpStatus.OK);
+                                                               @RequestHeader(name = "X-username") String username,
+                                                               @RequestParam(name = "request_id") int requestId) {
+        return new ResponseEntity<>(transcriptLineService.updatePoint(1, transcriptLines, username, requestId), HttpStatus.OK);
     }
 
     @PostMapping("/send-request")

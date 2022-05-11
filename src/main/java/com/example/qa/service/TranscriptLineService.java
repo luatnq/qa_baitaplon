@@ -8,7 +8,8 @@ public interface TranscriptLineService {
 
     TranscriptOverview getTranscript(int studyClassId, int subjectId);
 
-    List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines, String username);
+    List<TranscriptLineDTO> updatePoint(int studyClassId, List<TranscriptLineDTO> updatedTranscriptLines,
+                                        String username, int requestId);
 
     //    List<TranscriptLine> insertPoint(int studyClassId, List<TranscriptLine> transcriptLines);
     RequestDTO sendRequest(RequestDTO requestDTO);
