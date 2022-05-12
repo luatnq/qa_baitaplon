@@ -3,6 +3,7 @@ package com.example.qa.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "staff_id")
+@Proxy(lazy=false)
 public class Staff extends User implements Serializable {
 
     @Column(name = "position")

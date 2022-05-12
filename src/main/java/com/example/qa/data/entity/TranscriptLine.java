@@ -4,6 +4,7 @@ package com.example.qa.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Proxy(lazy=false)
 public class TranscriptLine extends BaseEntity{
 
     @Id
@@ -30,7 +32,7 @@ public class TranscriptLine extends BaseEntity{
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+//    @ElementCollection(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "transcriptLine")
     private List<TranscriptItem> transcriptItems;
 

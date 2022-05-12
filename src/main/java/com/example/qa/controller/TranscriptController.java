@@ -62,7 +62,7 @@ public class TranscriptController {
     }
 
     @GetMapping("/requests")
-    public ResponseEntity<BaseResponse> getChecks(){
+    public ResponseEntity<BaseResponse> getRequests(){
         return new ResponseEntity<>(transcriptLineService.getRequests(), HttpStatus.OK);
     }
 }

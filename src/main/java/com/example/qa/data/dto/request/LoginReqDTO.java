@@ -12,4 +12,5 @@ public class LoginReqDTO {
 
     private String password;
 
+
 }

@@ -1,12 +1,12 @@
 package com.example.qa.exception;
 
-import com.example.qa.exception.common.AuthError;
-import com.example.qa.exception.common.AuthException;
+import com.example.qa.exception.common.QAError;
+import com.example.qa.exception.common.QAException;
 
-public class BadRequestAlertException extends AuthException {
+public class BadRequestAlertException extends QAException {
 
     public BadRequestAlertException(){
-        super(AuthError.USER_BAD_REQUEST);
+        super(QAError.USER_BAD_REQUEST);
     }
 
 }

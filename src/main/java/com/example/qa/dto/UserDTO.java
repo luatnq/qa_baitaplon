@@ -16,7 +16,9 @@ public class UserDTO {
 
     private String role;
 
-    public UserDTO(String fullName, String major, String role){
+    private String username;
+
+    public UserDTO(String fullName, String major, String role, String username){
         this.fullName = fullName;
         if ("ROLE_TEACHER".equals(role)){
             this.major = major;
@@ -24,6 +26,7 @@ public class UserDTO {
             this.position = major;
         }
         this.role = role;
+        this.username = username;
     }
 //
 //    public UserDTO(String fullName, String position, String role){

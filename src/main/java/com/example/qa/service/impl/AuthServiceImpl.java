@@ -6,6 +6,7 @@ import com.example.qa.data.entity.Staff;
 import com.example.qa.data.entity.Teacher;
 import com.example.qa.data.entity.User;
 import com.example.qa.dto.UserDTO;
+import com.example.qa.exception.ResourceNotFoundException;
 import com.example.qa.exception.UnauthorizedException;
 import com.example.qa.repository.StaffRepository;
 import com.example.qa.repository.TeacherRepository;
@@ -28,17 +29,18 @@ public class AuthServiceImpl implements AuthService {
     private final String roleStaff = "ROLE_STAFF";
 
     public UserDTO login(LoginReqDTO loginReqDTO) {
-        User user = userRepository.findByUsername(loginReqDTO.getUsername());
+        User user = userRepository.findByUsername2(loginReqDTO.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException());
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (Objects.nonNull(user) && passwordEncoder.matches(loginReqDTO.getPassword(), user.getPassword())) {
 //            String role = checkRole(user);
             if (user.getRole().equals(roleTeacher)) {
                 Teacher teacher = teacherRepository.getById(user.getId());
-                return new UserDTO(user.getFullName(), teacher.getMajor(), roleTeacher);
+                return new UserDTO(user.getFullName(), teacher.getMajor(), roleTeacher, user.getUsername());
             } else {
                 Staff staff = staffRepository.getById(user.getId());
-                return new UserDTO(user.getFullName(), staff.getPosition(), roleStaff);
+                return new UserDTO(user.getFullName(), staff.getPosition(), roleStaff, user.getUsername());
             }
         }
         throw new UnauthorizedException();
