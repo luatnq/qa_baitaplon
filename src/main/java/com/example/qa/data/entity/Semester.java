@@ -3,6 +3,7 @@ package com.example.qa.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name ="semesters")
+@Proxy(lazy=false)
 public class Semester implements Serializable {
 
     @Id

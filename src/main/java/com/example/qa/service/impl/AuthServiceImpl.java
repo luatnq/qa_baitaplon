@@ -46,4 +46,17 @@ public class AuthServiceImpl implements AuthService {
         throw new UnauthorizedException();
     }
 
+    public UserDTO getUserInfo(LoginReqDTO loginReqDTO) {
+        User user = userRepository.findByUsername2(loginReqDTO.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException());
+
+        if (user.getRole().equals(roleTeacher)) {
+            Teacher teacher = teacherRepository.getById(user.getId());
+            return new UserDTO(user.getFullName(), teacher.getMajor(), roleTeacher, user.getUsername());
+        } else {
+            Staff staff = staffRepository.getById(user.getId());
+            return new UserDTO(user.getFullName(), staff.getPosition(), roleStaff, user.getUsername());
+        }
+
+    }
 }

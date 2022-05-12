@@ -175,7 +175,7 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
     }
 
     public RequestDTO sendRequest(RequestDTO requestDTO){
-        Date dateReq = DateUtils.addMinutes(Date.from(DateUtils.now()), 3);
+        Date dateReq = DateUtils.addMinutes(Date.from(DateUtils.now()), 60);
         StudyClass studyClass = studyClassRepository.getById(requestDTO.getClassId());
         Subject subject = subjectRepository.getById(requestDTO.getSubjectId());
 
@@ -192,8 +192,7 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         request.setStatus(status);
         request.setLastUpdatedDate(DateUtils.now());
         requestRepository.save(request);
-
-        return new BaseResponse();
+        return BaseResponse.builder().status(200).data(mappingHelper.map(request, RequestDTO.class)).build();
     }
 
     /**
@@ -219,6 +218,10 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         Date dateInput = Date.from(DateUtils.now());
         List<Request> requests = requestRepository.getRequests(dateInput);
         return new BaseResponse(200, mappingHelper.mapList(requests, RequestDTO.class));
+    }
+
+    public void deleteById(int reqId){
+        requestRepository.deleteById(reqId);
     }
 
 }

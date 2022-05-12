@@ -4,6 +4,7 @@ import com.example.qa.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Proxy(lazy=false)
 public class TranscriptItemHis extends BaseEntity{
 
     @Id

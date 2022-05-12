@@ -4,6 +4,7 @@ import com.example.qa.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -16,6 +17,7 @@ import java.time.ZonedDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Proxy(lazy=false)
 public class TranscriptLineHis extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

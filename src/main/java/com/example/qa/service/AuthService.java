@@ -5,4 +5,6 @@ import com.example.qa.dto.UserDTO;
 
 public interface AuthService {
     UserDTO login(LoginReqDTO loginReqDTO);
+
+    UserDTO getUserInfo(LoginReqDTO loginReqDTO);
 }

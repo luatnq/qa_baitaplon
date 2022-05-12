@@ -40,4 +40,11 @@ public class RequestDTO {
 
     @JsonProperty("username_approve")
     private String usernameApprove;
+
+    public RequestDTO(String usernameReq, int status, int subjectId, int classId) {
+        this.usernameReq = usernameReq;
+        this.status = status;
+        this.subjectId = subjectId;
+        this.classId = classId;
+    }
 }

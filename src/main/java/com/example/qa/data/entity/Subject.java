@@ -3,6 +3,7 @@ package com.example.qa.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Proxy(lazy=false)
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -19,4 +19,6 @@ public interface TranscriptLineService {
     BaseResponse checkRequest(int id);
 
     BaseResponse getRequests();
+
+    void deleteById(int reqId);
 }

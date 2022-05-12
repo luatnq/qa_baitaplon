@@ -3,6 +3,7 @@ package com.example.qa.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "subject_semester")
+@Proxy(lazy=false)
 public class SubjectSemester implements Serializable {
 
     @Id

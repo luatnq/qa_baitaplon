@@ -10,16 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth/login")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReqDTO loginReq) {
 
         return new ResponseEntity<>(authService.login(loginReq), HttpStatus.OK);
     }
 
+    @PostMapping("/user-info")
+    public ResponseEntity<?> getUserInfo(@RequestBody LoginReqDTO loginReq) {
+
+        return new ResponseEntity<>(authService.getUserInfo(loginReq), HttpStatus.OK);
+    }
 }
