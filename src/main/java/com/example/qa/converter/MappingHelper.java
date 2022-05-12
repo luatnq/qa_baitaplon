@@ -9,6 +9,8 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.data.domain.Page;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

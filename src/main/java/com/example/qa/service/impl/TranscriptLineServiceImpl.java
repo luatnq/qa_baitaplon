@@ -27,6 +27,8 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
     private final LogRepository logRepository;
     private final UserRepository userRepository;
     private final RequestRepository requestRepository;
+    private final StudyClassRepository studyClassRepository;
+    private final SubjectRepository subjectRepository;
 
     private final String UPDATE_ACTION = "update";
     private final String CREATE_ACTION = "create";
@@ -110,7 +112,7 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
         int countStudentFail = 0;
         if (this.checkSubjectPoint(transcriptLineIds, 6)) {
             for (TranscriptItem item : transcriptItems) {
-                if (item.getPoint().compareTo(0F) == 0 && item.getPoint().compareTo(0F) == -1) {
+                if (Objects.nonNull(item.getPoint()) && item.getPoint().compareTo(0F) == 0 && item.getPoint().compareTo(0F) == -1) {
                     countStudentFail++;
                 }
             }
@@ -174,6 +176,11 @@ public class TranscriptLineServiceImpl implements TranscriptLineService {
 
     public RequestDTO sendRequest(RequestDTO requestDTO){
         Date dateReq = DateUtils.addMinutes(Date.from(DateUtils.now()), 3);
+        StudyClass studyClass = studyClassRepository.getById(requestDTO.getClassId());
+        Subject subject = subjectRepository.getById(requestDTO.getSubjectId());
+
+        requestDTO.setClassName(studyClass.getClassName());
+        requestDTO.setSubjectName(subject.getName());
         Request request = new Request(requestDTO, dateReq);
         return mappingHelper.map(requestRepository.save(request), RequestDTO.class);
     }

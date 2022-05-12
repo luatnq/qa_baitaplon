@@ -30,6 +30,7 @@ public class TranscriptLine extends BaseEntity{
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
 
+    @ElementCollection(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "transcriptLine")
     private List<TranscriptItem> transcriptItems;
 

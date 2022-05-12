@@ -32,6 +32,12 @@ public class RequestDTO {
     @JsonProperty("class_name")
     private String className;
 
+    @JsonProperty("subject_id")
+    private int subjectId;
+
+    @JsonProperty("class_id")
+    private int classId;
+
     @JsonProperty("username_approve")
     private String usernameApprove;
 }
